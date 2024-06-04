@@ -1,0 +1,50 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Contributor {
+  userId: ID!
+  githubUsername: String!
+  name: String!
+  email: String!
+  contributions: [Contribution!]
+} 
+
+type Contribution {
+  contributionId: ID!
+  projectName: String!
+  type: String!
+  date: String!
+}
+
+input NewContribution {
+  projectName: String!
+  type: String!
+  date: String!
+}
+
+input NewContributor {
+  githubUsername: String!
+  name: String!
+  email: String!
+  contributions: NewContribution
+}
+
+input UpdateContributor {
+  githubUsername: String!
+  name: String!
+  email: String!
+}
+
+type Query {
+  getAllContributors: [Contributor!]!
+  getAContributor(userId: ID!): Contributor!
+}
+
+type Mutation {
+  addAContributor(input: NewContributor!): Contributor!
+  updateAContributor(userId: ID!, input: UpdateContributor!): Contributor!
+  deleteAContributor(userId: ID!): Contributor!
+  deleteAContribution(userId : ID!, contributionId: ID!): Contribution!
+  addAContribution(userId: ID!, input: NewContribution!): Contribution!
+}
